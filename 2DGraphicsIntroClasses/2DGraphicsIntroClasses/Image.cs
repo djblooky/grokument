@@ -249,5 +249,3 @@ class Image
 		return rle ? DataType.RleTrueColorImage : DataType.UncompressedTrueColorImage;
 	}
 }
-
-
