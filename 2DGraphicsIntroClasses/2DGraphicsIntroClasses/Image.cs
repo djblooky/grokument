@@ -137,6 +137,11 @@ class Image
 		}
 	}
 
+	/// <summary>
+	/// This is a function that writes the parameter header to an instance of writer when called. It returns void
+	/// </summary>
+	/// <param name="writer"></param>
+	/// <param name="header"></param>
 	static void WriteTo (BinaryWriter writer, TGAHeader header)
 	{
 		writer.Write (header.IdLength);
@@ -153,6 +158,11 @@ class Image
 		writer.Write (header.ImageDescriptor);
 	}
 
+	/// <summary>
+	/// This function returns a value of type TGAHeader, it is assigned to the variable header in the function Image
+	/// </summary>
+	/// <param name="reader"></param>
+	/// <returns name="header"> </returns>
 	static TGAHeader ReadHeader (BinaryReader reader)
 	{
 		var header = new TGAHeader {
@@ -172,13 +182,17 @@ class Image
 		return header;
 	}
 
+	/// <summary>
+	/// writes the length of writer every tick if curpix is larger than npixels
+	/// </summary>
+	/// <param name="writer"></param>
+	/// <returns>true</returns>
 	bool UnloadRleData (BinaryWriter writer)
 	{
 		const int max_chunk_length = 128;
 		int npixels = Width * Height;
 		int curpix = 0;
 		var bpp = (int)Format;
-
 		while (curpix < npixels) {
 			int chunkstart = curpix * bpp;
 			int curbyte = curpix * bpp;
@@ -207,6 +221,10 @@ class Image
 		return true;
 	}
 
+	/// <summary>
+	/// This functiom takes parameter reader and uses it to count how many pixels are in reader
+	/// </summary>
+	/// <param name="reader">passed in when called its size is used to calculate the size of the image</param>
 	void LoadRleData (BinaryReader reader)
 	{
 		var pixelcount = Width * Height;
@@ -241,6 +259,12 @@ class Image
 		} while (currentpixel < pixelcount);
 	}
 
+	/// <summary>
+	/// returns rle and sets it based on the value of bpp whether it is grayscale or color
+	/// </summary>
+	/// <param name="bpp">parameter that is passed in when the function is called, it is used to set the value of format</param>
+	/// <param name="rle">returned value based on whether the bpp parameters is determined to be grayscale or color</param>
+	/// <returns></returns>
 	static DataType DataTypeFor (int bpp, bool rle)
 	{
 		var format = (Format)bpp;
