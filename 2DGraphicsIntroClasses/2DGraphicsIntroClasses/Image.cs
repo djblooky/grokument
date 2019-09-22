@@ -4,26 +4,8 @@ using System.IO;
 class Image
 {
 	internal byte [] buffer;
-	
-	/// <summary>
-	/// Property, used to get the width of an image
-	/// The width of the image, it is used multiple times to determine file size
-	/// </summary>
-	/// <value></value>
 	public int Width { get; }
-
-	/// <summary>
-	/// Property, used to get the height of an image
-	/// The height of the image, it is used multiple times to determine the file size
-	/// </summary>
-	/// <value></value>
 	public int Height { get; }
-
-	/// <summary>
-	/// Property, used to get a value for the type of image
-	/// is used to determine if the image is in color or greyscale
-	/// </summary>
-	/// <value></value>
 	public Format Format { get; }
 
 	public int BytesPerRow {
@@ -182,6 +164,10 @@ class Image
 	/// <returns name="header">variable declared in the function it is returned, contains data from reader variable that was added in </returns>
 	static TGAHeader ReadHeader (BinaryReader reader)
 	{
+		/// <summary>
+		/// header is set based on the data passed into the function from reader
+		/// </summary>
+		/// <value></value>
 		var header = new TGAHeader {
 			IdLength = reader.ReadByte (),
 			ColorMapType = reader.ReadByte (),
@@ -200,16 +186,34 @@ class Image
 	}
 
 	/// <summary>
+	/// Returns a true value when finished unloading data from rle 
 	/// writes the length of writer every tick if curpix is larger than npixels, unloads data and returns true when all data is unloaded
 	/// </summary>
 	/// <param name="writer">passed into the function, is written to while function is running </param>
 	/// <returns>true</returns>
 	bool UnloadRleData (BinaryWriter writer)
 	{
+		/// <summary>
+		/// the maximum size a chunk of data can be
+		/// </summary>
 		const int max_chunk_length = 128;
+
+		/// <summary>
+		/// width and height of an image
+		/// </summary>
 		int npixels = Width * Height;
+
+		/// <summary>
+		/// the current pixel the function is unloading
+		/// </summary>
 		int curpix = 0;
+
+		/// <summary>
+		/// bytes per pixel is set to the type of image (greyscale or color) and is used to determine how large the file is
+		/// </summary>
+		/// <returns></returns>
 		var bpp = (int)Format;
+
 		while (curpix < npixels) {
 			int chunkstart = curpix * bpp;
 			int curbyte = curpix * bpp;
@@ -244,14 +248,34 @@ class Image
 	/// <param name="reader">passed in when called its size is used to calculate the size of the image</param>
 	void LoadRleData (BinaryReader reader)
 	{
+		/// <summary>
+		/// pixelcount is the combined value of width and height
+		/// </summary>
 		var pixelcount = Width * Height;
+		/// <summary>
+		/// currentpixel is incremented each loop as the function checks each pixel
+		/// </summary>
 		var currentpixel = 0;
+		/// <summary>
+		/// currentbyte is incremented each cycle if it is less than bytesapp
+		/// </summary>
 		var currentbyte = 0;
 
+		/// <summary>
+		/// bytes per pixel is set to the type of image (greyscale or color) and is used to determine how large the file is
+		/// </summary>
+		/// <returns></returns>
 		var bytespp = (int)Format;
+
+		/// <summary>
+		/// The byte at which the reader stars reading if the image is not greyscale
+		/// </summary>
 		var color = new byte [4];
 
 		do {
+			/// <summary>
+			/// chunkheader is used as a count of how large the reader variable is within the Do loop
+			/// </summary>
 			var chunkheader = reader.ReadByte ();
 			if (chunkheader < 128) {
 				chunkheader++;
@@ -284,9 +308,14 @@ class Image
 	/// <returns name="rle">rle is different depending on whether the image is greyscale or in color</returns>
 	static DataType DataTypeFor (int bpp, bool rle)
 	{
+		/// <summary>
+		/// variable that is used to determine if image is greyscale or color
+		/// </summary>
 		var format = (Format)bpp;
+
 		if (format == Format.GRAYSCALE)
 			return rle ? DataType.RleBlackAndWhiteImage : DataType.UncompressedBlackAndWhiteImage;
+
 		return rle ? DataType.RleTrueColorImage : DataType.UncompressedTrueColorImage;
 	}
 }
