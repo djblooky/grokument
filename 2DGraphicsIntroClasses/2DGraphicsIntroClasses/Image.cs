@@ -3,17 +3,39 @@ using System.IO;
 
 class Image
 {
+    /// <summary>
+    /// An array of bytes to store a buffer
+    /// </summary>
 	internal byte [] buffer;
+    /// <summary>
+    /// An int to store screen width
+    /// </summary>
 	public int Width { get; }
+    /// <summary>
+    /// An int to store screen height
+    /// </summary>
 	public int Height { get; }
+    /// <summary>
+    /// An instance of format used to retrieve grayscale, bgr, and bgre specifications
+    /// </summary>
 	public Format Format { get; }
 
+    /// <summary>
+    /// An integer value that returns the number of bytes per row given a particular screen width and format
+    /// </summary>
 	public int BytesPerRow {
 		get {
 			return Width * (int)Format;
 		}
 	}
 
+    /// <summary>
+    /// The constructor for Image.cs which takes in a width, height and format and assigns them to local variables. 
+    /// A buffer is created from a new byte by multiplying screen height and the local bytes per row
+    /// </summary>
+    /// <param name="width">Screen width is passed in to assign local Width int</param>
+    /// <param name="height">The screen height is passed in to assign local Height int</param>
+    /// <param name="format">An instance of format is passed in to assign the local Format</param>
 	public Image (int width, int height, Format format)
 	{
 		Width = width;
@@ -23,6 +45,13 @@ class Image
 		buffer = new byte [height * BytesPerRow];
 	}
 
+    /// <summary>
+    /// Var bpp id assigned from the local format cast as an int, and then multiplied by the Width to calculate bytesPerLine
+    /// Var half is assigned to the current Height shifted right by 1 byte
+    /// A for loop will iterate until it loops as many times as var half. This will assign l1 and l2 vars to be equal to the 
+    /// current number of bytes passed depending on the current line (iterator l). A nested for loop will go through each pixel
+    /// in each line and reverse their positions from l1 and l2.
+    /// </summary>
 	public void VerticalFlip ()
 	{
 		var bpp = (int)Format;
@@ -41,12 +70,23 @@ class Image
 		}
 	}
 
+    /// <summary>
+    /// A for loop iterates through the entire buffer length and clears each index of the array to zero
+    /// </summary>
 	public void Clear ()
 	{
 		for (int i = 0; i < buffer.Length; i++)
 			buffer [i] = 0;
 	}
 
+    /// <summary>
+    /// If the coordinates are within the screen range, gets the offset, length, and sets an empty value.
+    /// For each character in the RGB color code, shift the value left by 8 bytes and add to the buffer offset.
+    /// Can get or set the offset, value, and length(format)
+    /// </summary>
+    /// <param name="x">An x coordinate in pixels</param>
+    /// <param name="y">A y coordinate in pixels</param>
+    /// <returns>A new color of a particular value and format</returns>
 	public Color this [int x, int y] {
 		get {
 			if (x < 0 || x >= Width) throw new ArgumentException ("x");
@@ -72,11 +112,24 @@ class Image
 		}
 	}
 
+    /// <summary>
+    /// Takes in an x and y coordinate and determines an offset based on the current format and bytes per row.
+    /// </summary>
+    /// <param name="x">An x cordinate in pixels</param>
+    /// <param name="y">A y coordinate in pixels</param>
+    /// <returns>Y multiplied by bytes per row times format cast as an int</returns>
 	int GetOffset (int x, int y)
 	{
 		return y * BytesPerRow + x * (int)Format;
 	}
 
+    /// <summary>
+    /// Creates a new header file and binary writer at the specified path, then writes the header to the writer.
+    /// Writes the buffer if there is no RLE data, otherwise unloads the Rle data
+    /// </summary>
+    /// <param name="path">File path string to save the writer and header files to</param>
+    /// <param name="rle">Boolean storing whether there is data compression encoding or not</param>
+    /// <returns>Returns true</returns>
 	public bool WriteToFile (string path, bool rle = true)
 	{
 		var bpp = (int)Format;
@@ -99,6 +152,14 @@ class Image
 		return true;
 	}
 
+    /// <summary>
+    /// Loads an image to a specified file path using a new BinaryReader Creates a header from the binary reader and 
+    /// uses those specifications to create height, width, bytespp, and format variables.
+    /// Ensures that the format and image size is correct, and then uncompresses depending on the type of image
+    /// specified in the header file. Vertical flips images of a certain descriptor, and returns the image.
+    /// </summary>
+    /// <param name="path">A string containing a specified file path</param>
+    /// <returns>Returns an Image</returns>
 	public static Image Load (string path)
 	{
 		using (var reader = new BinaryReader (File.OpenRead (path))) {
