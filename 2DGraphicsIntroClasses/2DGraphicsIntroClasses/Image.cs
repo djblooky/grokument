@@ -4,9 +4,26 @@ using System.IO;
 class Image
 {
 	internal byte [] buffer;
-
+	
+	/// <summary>
+	/// Property, used to get the width of an image
+	/// The width of the image, it is used multiple times to determine file size
+	/// </summary>
+	/// <value></value>
 	public int Width { get; }
+
+	/// <summary>
+	/// Property, used to get the height of an image
+	/// The height of the image, it is used multiple times to determine the file size
+	/// </summary>
+	/// <value></value>
 	public int Height { get; }
+
+	/// <summary>
+	/// Property, used to get a value for the type of image
+	/// is used to determine if the image is in color or greyscale
+	/// </summary>
+	/// <value></value>
 	public Format Format { get; }
 
 	public int BytesPerRow {
@@ -140,8 +157,8 @@ class Image
 	/// <summary>
 	/// This is a function that writes the parameter header to an instance of writer when called. It returns void
 	/// </summary>
-	/// <param name="writer"></param>
-	/// <param name="header"></param>
+	/// <param name="writer">passed into the function when called, it is written to using data from the header variable</param>
+	/// <param name="header">parameter passed into the function that contains data that is used to add information to the writer variable</param>
 	static void WriteTo (BinaryWriter writer, TGAHeader header)
 	{
 		writer.Write (header.IdLength);
@@ -161,8 +178,8 @@ class Image
 	/// <summary>
 	/// This function returns a value of type TGAHeader, it is assigned to the variable header in the function Image
 	/// </summary>
-	/// <param name="reader"></param>
-	/// <returns name="header"> </returns>
+	/// <param name="reader">passed into the function when called it is used to add data to the variable header</param>
+	/// <returns name="header">variable declared in the function it is returned, contains data from reader variable that was added in </returns>
 	static TGAHeader ReadHeader (BinaryReader reader)
 	{
 		var header = new TGAHeader {
@@ -183,9 +200,9 @@ class Image
 	}
 
 	/// <summary>
-	/// writes the length of writer every tick if curpix is larger than npixels
+	/// writes the length of writer every tick if curpix is larger than npixels, unloads data and returns true when all data is unloaded
 	/// </summary>
-	/// <param name="writer"></param>
+	/// <param name="writer">passed into the function, is written to while function is running </param>
 	/// <returns>true</returns>
 	bool UnloadRleData (BinaryWriter writer)
 	{
@@ -222,7 +239,7 @@ class Image
 	}
 
 	/// <summary>
-	/// This functiom takes parameter reader and uses it to count how many pixels are in reader
+	/// This functiom takes parameter reader and uses it to count how many pixels are in reader, if the current pixel count is smaller than the total number of pixels it continues running in a while loop
 	/// </summary>
 	/// <param name="reader">passed in when called its size is used to calculate the size of the image</param>
 	void LoadRleData (BinaryReader reader)
@@ -264,7 +281,7 @@ class Image
 	/// </summary>
 	/// <param name="bpp">parameter that is passed in when the function is called, it is used to set the value of format</param>
 	/// <param name="rle">returned value based on whether the bpp parameters is determined to be grayscale or color</param>
-	/// <returns></returns>
+	/// <returns name="rle">rle is different depending on whether the image is greyscale or in color</returns>
 	static DataType DataTypeFor (int bpp, bool rle)
 	{
 		var format = (Format)bpp;
