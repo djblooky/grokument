@@ -1,8 +1,10 @@
 using System;
 
+/// <summary>
+/// A struct containing Vec2f data with x and y coordinates
+/// </summary>
 struct Vec2f
 {
-
     /// <summary>
     /// An x coordinate float variable
     /// </summary>
