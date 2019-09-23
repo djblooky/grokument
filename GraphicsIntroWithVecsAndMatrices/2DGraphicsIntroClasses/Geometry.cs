@@ -2,9 +2,21 @@ using System;
 
 struct Vec2f
 {
+
+    /// <summary>
+    /// An x coordinate float variable
+    /// </summary>
 	public float x;
+    /// <summary>
+    /// A y coordinate float variable
+    /// </summary>
 	public float y;
 
+    /// <summary>
+    /// Gets or sets the x and y float coordinates based on an array index i depending on if i is empty or full (0 or 1) or null, where it throw invalid operation.
+    /// </summary>
+    /// <param name="i">An int i in the array index</param>
+    /// <returns>The get function returns x if i is 0 or returns y if i is 1</returns>
 	public float this [int i] {
 		get {
 			if (i == 0) return x;
@@ -18,6 +30,10 @@ struct Vec2f
 		}
 	}
 
+    /// <summary>
+    /// Divides the current Vector2 float by the Norm function (normalizes the current vector)
+    /// </summary>
+    /// <returns>Returns a Vec2f equal to this function divided by Norm ()</returns>
 	public Vec2f Normalize ()
 	{
 		return this / Norm ();
@@ -113,6 +129,8 @@ public struct Vec3f
 		return v;
 	}
 }
+
+//Andrew -  Halfway point
 
 struct Vec4f
 {
