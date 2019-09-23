@@ -274,7 +274,7 @@ static class Geometry
 	/// </summary>
 	/// <param name="l">vector3 that is passed into the function</param>
 	/// <param name="r">vector3 that is passed into the function</param>
-	/// <returns>returns a new vector3 that is the product of </returns>
+	/// <returns>returns a new vector3 that is the product of a</returns>
 	public static Vec3f Cross (Vec3f l, Vec3f r)
 	{
 		return new Vec3f {
