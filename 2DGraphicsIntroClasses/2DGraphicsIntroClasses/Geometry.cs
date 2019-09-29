@@ -363,27 +363,54 @@ static class Geometry
 			z = l.x * r.y - l.y * r.x
 		};
 	}
-
+	
+	/// <summary>
+	/// a static float that returns a float from a single point using two vector3
+	/// </summary>
+	/// <param name="l">the left vector3</param>
+	/// <param name="r">the right vector3</param>
+	/// <returns>a single float from the x,y and z values of l and r</returns>
 	public static float Dot (Vec3f l, Vec3f r)
 	{
 		return l.x * r.x + l.y * r.y + l.z * r.z;
 	}
 
+	/// <summary>
+	/// a static vec4f that returns a vec4f using a vector3 and a float
+	/// </summary>
+	/// <param name="v">the vector3 that is turned into a vector4 by having fill added to it</param>
+	/// <param name="fill">float added to v that turns v into a vector4</param>
+	/// <returns>new vec4f</returns>
 	public static Vec4f Embed4D (Vec3f v, float fill = 1)
 	{
 		return new Vec4f { x = v.x, y = v.y, z = v.z, h = fill };
 	}
-
+	
+	/// <summary>
+	/// static vec2f that takes a vector3 and turns it into a vec2
+	/// </summary>
+	/// <param name="v">vector3, its x and y values are used to create the returned vector2</param>
+	/// <returns>new vec2f</returns>
 	public static Vec2f Project2D (Vec3f v)
 	{
 		return new Vec2f { x = v.x, y = v.y };
 	}
-
+	
+	/// <summary>
+	/// static vec2f that takes a vector4 and turns it into a vec2
+	/// </summary>
+	/// <param name="v">vector4, its x and y values are used to create the returned vector2</param>
+	/// <returns>new vec2f</returns>
 	public static Vec2f Project2D (Vec4f v)
 	{
 		return new Vec2f { x = v.x, y = v.y };
 	}
 
+	/// <summary>
+	/// static vec2f that takes a vector4 and turns it into a vec2
+	/// </summary>
+	/// <param name="v">vector4, its x and y and z values are used to create the returned vector3</param>
+	/// <returns>new vec3f</returns>
 	public static Vec3f Project3D (Vec4f v)
 	{
 		return new Vec3f { x = v.x, y = v.y, z = v.z };
