@@ -1,27 +1,13 @@
 using System;
 
-/// <summary>
-/// A struct containing 3x3 Matrix data with row/column information
-/// </summary>
+
 public struct Matrix2
 {
-    /// <summary>
-    /// A constant int length set to 2
-    /// </summary>
     public const int Len = 2;
 
-    /// <summary>
-    /// Float values to store row and column information: R0C0 = row 0 column 0. 
-    /// </summary>
     public float R0C0, R0C1;
     public float R1C0, R1C1;
 
-    /// <summary>
-    /// Gets or sets row/column variables depending on the row/column int params for a 2x2 Matrix
-    /// </summary>
-    /// <param name="row">An int row array index</param>
-    /// <param name="column">An int column array index</param>
-    /// <returns>Getter returns the correct row/column variable depending on the row/column params</returns>
     public float this[int row, int column]
     {
         get
@@ -73,29 +59,14 @@ public struct Matrix2
     }
 }
 
-/// <summary>
-/// A struct containing 3x3 Matrix data with row/column information
-/// </summary>
 public struct Matrix3
 {
-    /// <summary>
-    /// A constant int length set to 3
-    /// </summary>
     public const int Len = 3;
 
-    /// <summary>
-    /// Float values to store row and column information: R0C0 = row 0 column 0. 
-    /// </summary>
     public float R0C0, R0C1, R0C2;
     public float R1C0, R1C1, R1C2;
     public float R2C0, R2C1, R2C2;
 
-    /// <summary>
-    /// Gets or sets row/column variables depending on the row/column int params for a 3x3 Matrix
-    /// </summary>
-    /// <param name="row">An int row array index</param>
-    /// <param name="column">An int column array index</param>
-    /// <returns>Getter returns the correct row/column variable depending on the row/column params</returns>
     public float this[int row, int column]
     {
         get
@@ -168,10 +139,6 @@ public struct Matrix3
         }
     }
 
-    /// <summary>
-    /// Flips a 3D matrix over its diaganol by assigning opposite row/column values to each other
-    /// </summary>
-    /// <returns>Returns a new 3x3 Matrix</returns>
     public Matrix3 Transpose()
     {
         return new Matrix3
@@ -188,11 +155,13 @@ public struct Matrix3
         };
     }
 
+
     /// <summary>
     /// Sets each column of this Matrix3 to the passed in column of a passed Vec3f's x, y, and z coordinates
     /// </summary>
     /// <param name="col">A column int</param>
     /// <param name="v">A Vec3f v</param>
+
     public void SetColumn(int col, Vec3f v)
     {
         this[0, col] = v.x;
@@ -200,11 +169,13 @@ public struct Matrix3
         this[2, col] = v.z;
     }
 
+
     /// <summary>
     /// Sets each row of this Matrix3 to the passed in column of a passed Vec3f's x, y, and z coordinates
     /// </summary>
     /// <param name="row">A column int</param>
     /// <param name="v">A Vec3f v</param>
+
 
     public void SetRow(int row, Vec3f v)
     {
@@ -213,10 +184,12 @@ public struct Matrix3
         this[row, 2] = v.z;
     }
 
+
     /// <summary>
     /// Builds a string depending on the lengths of rows and columns
     /// </summary>
     /// <returns>Returns a string</returns>
+
     public override string ToString()
     {
         var sb = new System.Text.StringBuilder();
@@ -229,6 +202,7 @@ public struct Matrix3
         return sb.ToString();
     }
 }
+
 
 /// <summary>
 /// A struct for a 4D matric consisting of four rows and columns
@@ -243,10 +217,17 @@ public struct Matrix4
     /// <summary>
     ///Floats to contain row and column information
     /// </summary>
+
+public struct Matrix4
+{
+    public const int Len = 4;
+
+
     public float R0C0, R0C1, R0C2, R0C3;
     public float R1C0, R1C1, R1C2, R1C3;
     public float R2C0, R2C1, R2C2, R2C3;
     public float R3C0, R3C1, R3C2, R3C3;
+
 
     /// <summary>
     /// Gets or sets the float value of the particular row and column variable specified by a row and column param
@@ -254,6 +235,7 @@ public struct Matrix4
     /// <param name="row">an int row</param>
     /// <param name="column">an int column</param>
     /// <returns>Returns a float for row/column</returns>
+
     public float this[int row, int column]
     {
         get
@@ -352,8 +334,6 @@ public struct Matrix4
         }
     }
 
-    //Andrew - halfway point
-    
     public Matrix4 Transpose()
     {
         return new Matrix4
