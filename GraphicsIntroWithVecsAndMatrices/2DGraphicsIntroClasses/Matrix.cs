@@ -155,6 +155,13 @@ public struct Matrix3
         };
     }
 
+
+    /// <summary>
+    /// Sets each column of this Matrix3 to the passed in column of a passed Vec3f's x, y, and z coordinates
+    /// </summary>
+    /// <param name="col">A column int</param>
+    /// <param name="v">A Vec3f v</param>
+
     public void SetColumn(int col, Vec3f v)
     {
         this[0, col] = v.x;
@@ -162,12 +169,26 @@ public struct Matrix3
         this[2, col] = v.z;
     }
 
+
+    /// <summary>
+    /// Sets each row of this Matrix3 to the passed in column of a passed Vec3f's x, y, and z coordinates
+    /// </summary>
+    /// <param name="row">A column int</param>
+    /// <param name="v">A Vec3f v</param>
+
+
     public void SetRow(int row, Vec3f v)
     {
         this[row, 0] = v.x;
         this[row, 1] = v.y;
         this[row, 2] = v.z;
     }
+
+
+    /// <summary>
+    /// Builds a string depending on the lengths of rows and columns
+    /// </summary>
+    /// <returns>Returns a string</returns>
 
     public override string ToString()
     {
@@ -182,14 +203,38 @@ public struct Matrix3
     }
 }
 
+
+/// <summary>
+/// A struct for a 4D matric consisting of four rows and columns
+/// </summary>
+public struct Matrix4
+{
+    /// <summary>
+    /// The length of this matrix as a const int
+    /// </summary>
+    public const int Len = 4;
+
+    /// <summary>
+    ///Floats to contain row and column information
+    /// </summary>
+
 public struct Matrix4
 {
     public const int Len = 4;
+
 
     public float R0C0, R0C1, R0C2, R0C3;
     public float R1C0, R1C1, R1C2, R1C3;
     public float R2C0, R2C1, R2C2, R2C3;
     public float R3C0, R3C1, R3C2, R3C3;
+
+
+    /// <summary>
+    /// Gets or sets the float value of the particular row and column variable specified by a row and column param
+    /// </summary>
+    /// <param name="row">an int row</param>
+    /// <param name="column">an int column</param>
+    /// <returns>Returns a float for row/column</returns>
 
     public float this[int row, int column]
     {
